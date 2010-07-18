@@ -1,0 +1,103 @@
+Created by PLY version 3.0 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    SOLIDUS
+    UNESCAPED
+    UNICODE_HEX
+    TAB_CHAR
+    FORM_FEED_CHAR
+    BACKSPACE_CHAR
+    LINE_FEED_CHAR
+    CARRIAGE_RETURN_CHAR
+    ESCAPE
+    REVERSE_SOLIDUS
+
+Grammar
+
+Rule 1     S' -> text
+Rule 2     text -> object
+Rule 3     text -> array
+Rule 4     value -> object
+Rule 5     value -> array
+Rule 6     value -> number
+Rule 7     value -> string
+Rule 8     value -> FALSE
+Rule 9     value -> TRUE
+Rule 10    value -> NULL
+Rule 11    object -> BEGIN_OBJECT members END_OBJECT
+Rule 12    members -> <empty>
+Rule 13    members -> members member VALUE_SEPARATOR
+Rule 14    members -> members member
+Rule 15    member -> string NAME_SEPARATOR value
+Rule 16    values -> <empty>
+Rule 17    values -> values value VALUE_SEPARATOR
+Rule 18    values -> values value
+Rule 19    array -> BEGIN_ARRAY values END_ARRAY
+Rule 20    number -> integer
+Rule 21    number -> float
+Rule 22    number -> MINUS integer
+Rule 23    number -> MINUS float
+Rule 24    integer -> int
+Rule 25    integer -> int exp
+Rule 26    float -> int frac
+Rule 27    float -> int frac exp
+Rule 28    exp -> E MINUS DIGITS
+Rule 29    exp -> E DIGITS
+Rule 30    exp -> E PLUS DIGITS
+Rule 31    frac -> DECIMAL_POINT DIGITS
+Rule 32    int -> ZERO
+Rule 33    int -> DIGITS
+Rule 34    string -> QUOTATION_MARK chars QUOTATION_MARK
+Rule 35    chars -> <empty>
+Rule 36    chars -> chars char
+
+Terminals, with rules where they appear
+
+BACKSPACE_CHAR       : 
+BEGIN_ARRAY          : 18
+BEGIN_OBJECT         : 10
+CARRIAGE_RETURN_CHAR : 
+DECIMAL_POINT        : 30
+DIGITS               : 27 28 29 30 32
+E                    : 27 28 29
+END_ARRAY            : 18
+END_OBJECT           : 10
+ESCAPE               : 
+FALSE                : 7
+FORM_FEED_CHAR       : 
+LINE_FEED_CHAR       : 
+MINUS                : 21 22 27
+NAME_SEPARATOR       : 14
+NULL                 : 9
+PLUS                 : 29
+QUOTATION_MARK       : 33 33
+REVERSE_SOLIDUS      : 
+SOLIDUS              : 
+TAB_CHAR             : 
+TRUE                 : 8
+UNESCAPED            : 
+UNICODE_HEX          : 
+VALUE_SEPARATOR      : 12 16
+ZERO                 : 31
+error                : 
+
+Nonterminals, with rules where they appear
+
+array                : 2 4
+char                 : 35
+chars                : 33 35
+exp                  : 24 26
+float                : 20 22
+frac                 : 25 26
+int                  : 23 24 25 26
+integer              : 19 21
+member               : 12 13
+members              : 10 12 13
+number               : 5
+object               : 1 3
+string               : 6 14
+text                 : 0
+value                : 14 16 17
+values               : 16 17 18
+

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 25
+/svn/!svn/ver/2/trunk/ply
+END
+lex.py
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/ply/lex.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/2/trunk/ply/__init__.py
+END
+yacc.py
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/2/trunk/ply/yacc.py
+END
+cpp.py
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/ply/cpp.py
+END
+ctokens.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/2/trunk/ply/ctokens.py
+END
