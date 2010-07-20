@@ -388,9 +388,25 @@ class JsonParser(object):
       p[0] = p[1] + p[2]
 
   def p_char(self, p):
+    '''char : UNESCAPED
+            | ESCAPE QUOTATION_MARK
+            | ESCAPE REVERSE_SOLIDUS
+            | ESCAPE SOLIDUS
+            | ESCAPE BACKSPACE_CHAR
+            | ESCAPE FORM_FEED_CHAR
+            | ESCAPE LINE_FEED_CHAR
+            | ESCAPE CARRIAGE_RETURN_CHAR
+            | ESCAPE TAB_CHAR'''
+    # Because the subscript [-1] has special meaning for YaccProduction
+    # slices we use [len(p) - 1] to always take the last value.
     p[0] = p[len(p) - 1]
 
   def p_char_unicode_hex(self, p):
+    '''char : ESCAPE UNICODE_HEX'''
+    # This looks more complicated than it is.  The escaped string is of
+    # the form \uXXXX and is assigned to p[2].  We take the trailing
+    # XXXX string via p[2][1:], parse it as a radix 16 (hex) integer,
+    # and convert that to the corresponding unicode character.
     p[0] = unichr(int(p[2][1:], 16))
 
   def p_error(self, p): 
@@ -398,6 +414,14 @@ class JsonParser(object):
 
   # Invoke the parser
   def parse(self, data, lexer=None, *args, **kwargs):
+    '''Parse the input JSON data string into a python data structure.
+
+    Args:
+      data: An input data string
+      lexer:  An optional ply.lex instance that overrides the default lexer.
+    Returns:
+      A python dict or list representing the input JSON data.
+    '''
     if lexer is None:
       lexer = self.lexer
     return self.parser.parse(data, lexer=lexer, *args, **kwargs)
@@ -406,6 +430,13 @@ class JsonParser(object):
 parser = None
 
 def parse(s):
+  '''Parse a string-like object and return the corresponding python structure.
+  
+  Args:
+    s: a string-like object
+  Returns:
+    A python dict or array
+  '''
   global parser
   if parser is None:
     parser = JsonParser()
@@ -413,6 +444,13 @@ def parse(s):
 
 
 def parse_file(f):
+  '''Parse a file-like object and return the corresponding python structure.
+
+  Args:
+    f: a file-like object
+  Returns:
+    A Python dict or array
+  '''
   return parse(f.read())
 
 
@@ -424,7 +462,7 @@ def main(argv):
   else:
     print parse_file(sys.stdin)
 
-loads = parse
 
 if __name__ == '__main__':
   main(sys.argv)
+
