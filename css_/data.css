@@ -160,7 +160,7 @@ button.minibutton::-moz-focus-inner{margin:-1px -3px;}
 .new-comments .inset h5{margin:0;font-size:10px;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#666;text-shadow:1px 1px 0 rgba(255,255,255,0.7);}
 .new-comments .commit-inset h5{color:#6c777f;}
 .new-comments .commit-list-comment .body{padding:0;}
-#compare .new-comments .commit-list-comment table.commits{border-width:0;margieat;}
+#compare .new-comments .commit-list-comment table.commits{border-width:0;}
 .topsearch form input.search.notnative.placeholder{background-position:0 0;}
 ul.nav{margin:1px 0 0 0;white-space:nowrap;}
 ul.nav li{list-style-type:none;display:inline;margin:0 15px 0 0;font-size:12px;}

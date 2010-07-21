@@ -10,6 +10,8 @@ def options():
     parser = optparse.OptionParser()
     parser.add_option('--num', '-n', dest='num', type='int', default=1, help='number of times to run it')
     parser.add_option('--out', '-o', dest='out', help='destination file')
+    parser.add_option('--profile', '-p', dest='profile', help='output profiling here')
+    parser.add_option('--single', '-s', dest='single', help='only run one')
     opts, pos = parser.parse_args()
     result = validate_options(pos, opts)
     if result is not None:
@@ -45,6 +47,7 @@ def get_bench_data(mod):
         tobench = __import__(mod)
     except ImportError, e:
         print>>sys.stderr, 'Either there\'s no module %s, or it raised an ImportError some other way' % mod
+        print e
         sys.exit(1)
     return tobench.text, tobench.functions
 
@@ -74,15 +77,29 @@ def bench_one(number, txt, fn):
     text = txt
     return timeit.timeit('func(text)', 'from __main__ import func, text', number=number)/number
 
+dataz = []
+
 def main():
     mod, opts = options()
-    benched = benchmark(int(opts.num), *get_bench_data(mod))
-    for name, item in zip(('titles', 'results', 'lines'), benched):
-        print '%s: %s' % (name, item)
-    if opts.out:
-        outfile = open(opts.out, 'w')
-        save_data(outfile, *benched)
-        outfile.close()
+    global dataz
+    text, funcs = get_bench_data(mod)
+    if opts.single:
+        if opts.single not in funcs:
+            print 'invalid --single arg [not in functions]', opts.single
+            sys.exit(0)
+        funcs = {opts.single:funcs[opts.single]}
+    if opts.profile:
+        import cProfile
+        dataz = [opts.num, text, funcs]
+        cProfile.run('benchmark(*dataz)', opts.profile)
+    else:
+        benched = benchmark(int(opts.num), text, funcs)
+        for name, item in zip(('titles', 'results', 'lines'), benched):
+            print '%s: %s' % (name, item)
+        if opts.out:
+            outfile = open(opts.out, 'w')
+            save_data(outfile, *benched)
+            outfile.close()
 
 if __name__ == '__main__':
     main()
